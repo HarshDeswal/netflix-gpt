@@ -11,9 +11,14 @@ const GptSearchBar = () => {
   const queryPrompt = "Act as Movie Recommendation System which can suggest any type of movie of any language and suggest movies for the query:"+searchText.current?.value + ". Only give me the names of 5 movies, result should be comma separated like the example results given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
   
   const fetchMovies = async (movie) => {
-    const data = await fetch('https://api.themoviedb.org/3/search/movie?query='+ movie +'&include_adult=false&language=en-UK&page=1',API_OPTIONS);
-    const movieData = data.json();
-    return movieData;
+    try {
+      const data = await fetch('https://api.themoviedb.org/3/search/movie?query='+ movie +'&include_adult=false&language=en-UK&page=1',API_OPTIONS);
+      const movieData = data.json();
+      return movieData;
+    } catch (error) {
+      return error.message;
+    }
+
 
   }
   const handleGptSearchClick = async () => {
@@ -41,4 +46,4 @@ const GptSearchBar = () => {
   )
 }
 
-export default GptSearchBar
+export default GptSearchBar;
